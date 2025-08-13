@@ -1,0 +1,65 @@
+-- postgreSQL script
+-- Eliminar tabla si existe
+DROP TABLE IF EXISTS imc_registros CASCADE;
+
+-- Crear tabla
+CREATE TABLE imc_registros (
+    id SERIAL PRIMARY KEY,
+    cc VARCHAR(20) NOT NULL,
+    nombre VARCHAR(20) NOT NULL,
+    apellido VARCHAR(30) NOT NULL,
+    edad INT NOT NULL,
+    estatura NUMERIC(5,2) NOT NULL,
+    peso NUMERIC(5,2) NOT NULL,
+    genero VARCHAR(10) NOT NULL,
+    imc NUMERIC(5,2) NOT NULL DEFAULT 0,
+    clasificacion VARCHAR(20) NOT NULL DEFAULT 'No calculado',
+    fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Función para calcular IMC
+CREATE OR REPLACE FUNCTION calculate_imc(est NUMERIC, peso NUMERIC)
+RETURNS NUMERIC AS $$
+BEGIN
+    RETURN ROUND((CAST(peso AS NUMERIC) / (CAST(est AS NUMERIC) * CAST(est AS NUMERIC))), 2);
+END;
+$$ LANGUAGE plpgsql;
+
+-- Función para obtener clasificación según IMC
+CREATE OR REPLACE FUNCTION imc_classification(imc_value NUMERIC)
+RETURNS VARCHAR AS $$
+BEGIN
+    IF imc_value < 18.5 THEN
+        RETURN 'Bajo peso';
+    ELSIF imc_value >= 18.5 AND imc_value <= 24.9 THEN
+        RETURN 'Normal';
+    ELSIF imc_value >= 25 AND imc_value <= 29.9 THEN
+        RETURN 'Sobrepeso';
+    ELSE
+        RETURN 'Obesidad';
+    END IF;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Trigger para calcular IMC y clasificación antes de insertar
+CREATE OR REPLACE FUNCTION before_insert_set_imc()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.estatura > 0 AND NEW.peso > 0 THEN
+        NEW.imc := calculate_imc(NEW.estatura, NEW.peso);
+        NEW.clasificacion := imc_classification(NEW.imc);
+    ELSE
+        NEW.imc := 0;
+        NEW.clasificacion := 'No calculado';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trg_set_imc_before_insert
+BEFORE INSERT ON imc_registros
+FOR EACH ROW
+EXECUTE PROCEDURE before_insert_set_imc();
+
+-- Ver tabla
+SELECT * FROM imc_registros;
