@@ -10,7 +10,7 @@
     <h1>Calculadora de IMC</h1>
 
     <div class="container">
-        <!-- Formulario IMC (izquierda) -->
+        <!-- Formulario IMC -->
         <form id="imcForm" class="imc-form">
             <input type="text" id="cc" placeholder="Cédula" required />
             <input type="text" id="nombre" placeholder="Nombre" required />
@@ -23,7 +23,7 @@
             <p id="resultado"></p>
         </form>
 
-        <!-- Tabla Clasificación IMC (derecha) -->
+        <!-- Tabla Clasificación IMC -->
         <section class="imc-clasificacion">
             <h2>Tabla de Rangos de IMC</h2>
             <table border="1">
@@ -34,22 +34,10 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Menos de 18.5</td>
-                        <td>Bajo peso</td>
-                    </tr>
-                    <tr>
-                        <td>18.5 - 24.9</td>
-                        <td>Normal</td>
-                    </tr>
-                    <tr>
-                        <td>25 - 29.9</td>
-                        <td>Sobrepeso</td>
-                    </tr>
-                    <tr>
-                        <td>30 o más</td>
-                        <td>Obesidad</td>
-                    </tr>
+                    <tr><td>Menos de 18.5</td><td>Bajo peso</td></tr>
+                    <tr><td>18.5 - 24.9</td><td>Normal</td></tr>
+                    <tr><td>25 - 29.9</td><td>Sobrepeso</td></tr>
+                    <tr><td>30 o más</td><td>Obesidad</td></tr>
                 </tbody>
             </table>
         </section>
@@ -59,18 +47,19 @@
     <button id="cargarBtn">Cargar Registros</button>
     <table border="1">
         <thead>
-            <tr>
-                <th>CC</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Edad</th>
-                <th>Género</th>
-                <th>Fecha</th>
-                <th>Estatura</th>
-                <th>Peso</th>
-                <th>IMC</th>
-            </tr>
-        </thead>
+    <tr>
+        <th>CC</th>
+        <th>Nombre</th>
+        <th>Apellido</th>
+        <th>Edad</th>
+        <th>Género</th>
+        <th>Fecha</th>
+        <th>Estatura</th>
+        <th>Peso</th>
+        <th>IMC</th>
+        <th>Clasificación</th>
+    </tr>
+</thead>
         <tbody id="tablaRegistros"></tbody>
     </table>
 
