@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>IMC App</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <h1>Calculadora de IMC</h1>
+
+    <div class="container">
+        <!-- Formulario IMC (izquierda) -->
+        <form id="imcForm" class="imc-form">
+            <input type="text" id="cc" placeholder="Cédula" required />
+            <input type="text" id="nombre" placeholder="Nombre" required />
+            <input type="text" id="apellido" placeholder="Apellido" required />
+            <input type="number" id="edad" placeholder="Edad" required />
+            <input type="number" step="0.01" id="estatura" placeholder="Estatura (m)" required />
+            <input type="number" step="0.1" id="peso" placeholder="Peso (kg)" required />
+            <input type="text" id="genero" placeholder="Género" required />
+            <button type="submit">Calcular</button>
+            <p id="resultado"></p>
+        </form>
+
+        <!-- Tabla Clasificación IMC (derecha) -->
+        <section class="imc-clasificacion">
+            <h2>Tabla de Rangos de IMC</h2>
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Rango</th>
+                        <th>Clasificación</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Menos de 18.5</td>
+                        <td>Bajo peso</td>
+                    </tr>
+                    <tr>
+                        <td>18.5 - 24.9</td>
+                        <td>Normal</td>
+                    </tr>
+                    <tr>
+                        <td>25 - 29.9</td>
+                        <td>Sobrepeso</td>
+                    </tr>
+                    <tr>
+                        <td>30 o más</td>
+                        <td>Obesidad</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </div>
+
+    <h2>Últimos registros</h2>
+    <button id="cargarBtn">Cargar Registros</button>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>CC</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Edad</th>
+                <th>Género</th>
+                <th>Fecha</th>
+                <th>Estatura</th>
+                <th>Peso</th>
+                <th>IMC</th>
+            </tr>
+        </thead>
+        <tbody id="tablaRegistros"></tbody>
+    </table>
+
+    <script src="app.js"></script>
+</body>
+</html>
